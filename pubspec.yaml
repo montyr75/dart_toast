@@ -1,8 +1,8 @@
 name: dart_toast
 description: Support for simple toast messages in Dart web apps.
-version: 0.1.0
-author: Monty Rasmussen
-homepage: github.com/montyr75/dart_toast
+version: 0.1.1
+author: Monty Rasmussen <montyr75@gmail.com>
+homepage: http://github.com/montyr75/dart_toast
 
 environment:
   sdk: '>=1.20.1 <2.0.0'

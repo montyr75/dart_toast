@@ -6,7 +6,10 @@ import 'package:css_animation/css_animation.dart';
 class Toast {
   Element _toastElement;
 
-  StreamSubscription _clickSub;
+  List<StreamSubscription> subs;
+
+  bool _delayRemoval = false;  // delay removal if mouse cursor is hovering over toast
+  bool _isExpired = false;     // has the removal timer expired?
 
   StreamController _onRemoved = new StreamController.broadcast();
   Stream get onRemoved => _onRemoved.stream;
@@ -48,10 +51,20 @@ class Toast {
     // add toast element to container element
     toastContainerElement.children.add(_toastElement);
 
-    _clickSub = _toastElement.onClick.listen((_) => remove());
+    subs = [
+      _toastElement.onClick.listen((_) => remove()),
+      _toastElement.onMouseEnter.listen((_) => _delayRemoval = true),
+      _toastElement.onMouseLeave.listen((_) {
+        _delayRemoval = false;
+        remove();
+      })
+    ];
 
     // remove the toast after [duration]
-    new Future.delayed(duration ?? const Duration(seconds: 2), remove);
+    new Future.delayed(duration ?? const Duration(seconds: 2), () {
+      _isExpired = true;
+      remove();
+    });
   }
 
   factory Toast.success({String title, String message, ToastPos position, Duration duration}) =>
@@ -67,9 +80,8 @@ class Toast {
     new Toast(title, message, type: ToastType.error, position: position, duration: duration);
 
   void remove() {
-    if (!removed) {
-      _clickSub?.cancel();
-      _clickSub = null;
+    if (!removed && !_delayRemoval && _isExpired) {
+      _cancelSubs();
 
       // TODO: Provide a way to customize animations.
       CssAnimation animation = new CssAnimation.properties(
@@ -96,7 +108,7 @@ class Toast {
 
     throw new UnsupportedError('Invalid toast type.');
   }
-  
+
   String _getPosClass(ToastPos pos) {
     switch (pos) {
       case ToastPos.topLeft: return ' toast-top-left';
@@ -108,6 +120,14 @@ class Toast {
     }
 
     throw new UnsupportedError('Invalid toast position.');
+  }
+
+  void _cancelSubs() {
+    for (StreamSubscription sub in subs) {
+      sub.cancel();
+    }
+
+    subs = null;
   }
 
   bool get removed => _toastElement == null;
