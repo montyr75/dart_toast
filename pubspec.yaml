@@ -1,15 +1,16 @@
 name: dart_toast
 description: Support for simple toast messages in Dart web apps.
-version: 0.1.1
+version: 0.2.0
 author: Monty Rasmussen <montyr75@gmail.com>
 homepage: http://github.com/montyr75/dart_toast
 
 environment:
-  sdk: '>=1.20.1 <2.0.0'
+  sdk: '>=2.0.0-dev.65 <2.0.0'
 
 dependencies:
-  css_animation: ^0.1.8
+  css_animation:
+    git: https://github.com/vutility/css_animation
 
 dev_dependencies:
-  browser: ^0.10.0
-  dart_to_js_script_rewriter: ^1.0.3
+  build_runner: ^0.8.8
+  build_web_compilers: ^0.4.0

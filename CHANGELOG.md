@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.2.0
+
+- Updating for Dart 2.0.0-dev.65.
+
 ## 0.1.1
 
 - Toasts will no longer be removed while mouse cursor hovers over them.
