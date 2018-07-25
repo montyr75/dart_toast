@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.2.1
+
+- Updating for Dart release.
+
 ## 0.2.0
 
 - Updating for Dart 2.0.0-dev.65.
