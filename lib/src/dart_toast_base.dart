@@ -14,7 +14,7 @@ class Toast {
   StreamController _onRemoved = new StreamController.broadcast();
   Stream get onRemoved => _onRemoved.stream;
 
-  Toast(String title, String message, {ToastType type, ToastPos position, Duration duration}) {
+  Toast(String title, String message, {MessageType type, ToastPos position, Duration duration}) {
     // get container element
     Element toastContainerElement = document.body.querySelector('#toast-container');
 
@@ -28,7 +28,7 @@ class Toast {
     toastContainerElement.className = _getPosClass(position ?? ToastPos.topRight);
 
     // create toast element
-    _toastElement = new DivElement()..className = "toast ${_getTypeClass(type ?? ToastType.plain)}";
+    _toastElement = new DivElement()..className = "toast ${_getTypeClass(type ?? MessageType.plain)}";
 
     // create title element
     if (title?.isNotEmpty ?? false) {
@@ -68,16 +68,16 @@ class Toast {
   }
 
   factory Toast.success({String title, String message, ToastPos position, Duration duration}) =>
-    new Toast(title, message, type: ToastType.success, position: position, duration: duration);
+    new Toast(title, message, type: MessageType.success, position: position, duration: duration);
 
   factory Toast.info({String title, String message, ToastPos position, Duration duration}) =>
-    new Toast(title, message, type: ToastType.info, position: position, duration: duration);
+    new Toast(title, message, type: MessageType.info, position: position, duration: duration);
 
   factory Toast.warning({String title, String message, ToastPos position, Duration duration}) =>
-    new Toast(title, message, type: ToastType.warning, position: position, duration: duration);
+    new Toast(title, message, type: MessageType.warning, position: position, duration: duration);
 
   factory Toast.error({String title, String message, ToastPos position, Duration duration}) =>
-    new Toast(title, message, type: ToastType.error, position: position, duration: duration);
+    new Toast(title, message, type: MessageType.error, position: position, duration: duration);
 
   void remove() {
     if (!removed && !_delayRemoval && _isExpired) {
@@ -97,13 +97,13 @@ class Toast {
     }
   }
 
-  String _getTypeClass(ToastType type) {
+  String _getTypeClass(MessageType type) {
     switch (type) {
-      case ToastType.plain: return 'toast-plain';
-      case ToastType.success: return 'toast-success';
-      case ToastType.error: return 'toast-error';
-      case ToastType.warning: return 'toast-warning';
-      case ToastType.info: return 'toast-info';
+      case MessageType.plain: return 'toast-plain';
+      case MessageType.success: return 'toast-success';
+      case MessageType.error: return 'toast-error';
+      case MessageType.warning: return 'toast-warning';
+      case MessageType.info: return 'toast-info';
     }
 
     throw new UnsupportedError('Invalid toast type.');
@@ -133,7 +133,7 @@ class Toast {
   bool get removed => _toastElement == null;
 }
 
-enum ToastType {
+enum MessageType {
   plain,
   success,
   error,

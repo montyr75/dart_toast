@@ -1,8 +1,12 @@
 # Changelog
 
+## 0.3.0
+
+- **Breaking:** Renamed `ToastType` to `MessageType`.
+
 ## 0.2.1
 
-- Updating for Dart release.
+- Updating for Dart 2 release.
 
 ## 0.2.0
 
